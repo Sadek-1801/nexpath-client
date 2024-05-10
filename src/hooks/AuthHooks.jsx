@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import AuthProvider from "../authProvider/AuthProvider";
+import { AuthContext } from "../authProvider/AuthProvider";
 
 const AuthHooks = () => {
-   const all = useContext(AuthProvider)
+   const all = useContext(AuthContext)
    return all;
 };
 

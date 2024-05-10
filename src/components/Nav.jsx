@@ -1,26 +1,40 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../assets/logo.svg"
+import logo from "../assets/logo2.png"
+import AuthHooks from "../hooks/AuthHooks";
+import toast from "react-hot-toast";
 const Navbar = () => {
+    const { user, logOut } = AuthHooks()
+    console.log(user)
     const [theme, setTheme] = useState('light')
-    const handleTheme = (e) =>{
-       if(e.target.checked){
-        setTheme('dark')
-       }else {
-        setTheme('light')
-       }
-    } 
+    const handleTheme = (e) => {
+        if (e.target.checked) {
+            setTheme('dark')
+        } else {
+            setTheme('light')
+        }
+    }
     useEffect(() => {
         localStorage.setItem('theme', theme)
         const localTheme = localStorage.getItem('theme')
         document.querySelector('html').setAttribute('data-theme', localTheme)
-      }, [theme])
+    }, [theme])
 
-
+    const handleLogout = () => {
+        logOut()
+            .then(toast.success('Successfully Logged Out'))
+            .catch()
+    }
     const navLinks = <>
-        <li><NavLink to="/" className={({isActive}) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"} >Home</NavLink></li>
-        <li><NavLink to="/allJobs" className={({isActive}) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"}>All Jobs</NavLink></li>
-        <li><NavLink to="/blogs" className={({isActive}) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"}>Blogs</NavLink></li>
+        <li><NavLink to="/" className={({ isActive }) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"} >Home</NavLink></li>
+        <li><NavLink to="/allJobs" className={({ isActive }) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"}>All Jobs</NavLink></li>
+        <li><NavLink to="/blogs" className={({ isActive }) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"}>Blogs</NavLink></li>
+        {
+            user && <>
+                <li><NavLink to="/appliedJobs" className={({ isActive }) => isActive ? "text-first font-bold hover:underline-offset-8 hover:underline" : "font-bold"}>Applied Jobs</NavLink></li>
+
+            </>
+        }
     </>
 
     return (
@@ -34,7 +48,7 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <div className='w-12 h-12 '>
+                <div className='w-10 h-10 '>
                     <img className='object-cover' src={logo} alt="" />
                 </div>
                 <Link className="btn btn-ghost font-bold  text-2xl p-0 relative" to="/" >NexPath</Link>
@@ -57,9 +71,30 @@ const Navbar = () => {
                     <svg className="swap-on fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" /></svg>
 
                 </label>
-                <Link to={'/login'} type="button" className=" bg-first text-white px-8 py-3 font-semibold rounded-full dark:bg-gray-800 dark:text-gray-100">Login</Link>
-            </div>
-        </div>
+                {
+                    !user && (
+                        <Link to={'/login'} type="button" className=" bg-first text-white px-8 py-3 font-semibold rounded-full dark:bg-gray-800 dark:text-gray-100">Login</Link>
+                    )}
+                {user && (
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={1} role="button" className="btn btn-circle avatar">
+                            <div title={user?.displayName} className="w-10 rounded-full">
+                                <img alt="Tailwind CSS Navbar component" 
+                                src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} />
+                            </div>
+                        </div>
+                        <ul tabIndex={1} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                            <li><Link onClick={handleLogout}>Logout</Link></li>
+                            <li><Link to={'/appliedJobs'}>Applied Jobs</Link></li>
+                            <li><Link to={'/addJobs'}>Add Jobs</Link></li>
+                            <li><Link to={'/myJobs'}>My Jobs</Link></li>
+                        </ul>
+                    </div>
+                )}
+
+
+            </div >
+        </div >
     );
 };
 
