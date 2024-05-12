@@ -35,8 +35,8 @@ const Login = () => {
                 toast.success('Successfully Login')
                 navigate(from)
             })
-            .catch(() => {
-                toast.error('Try Again')
+            .catch((error) => {
+                toast.error(error?.message)
             })
     }
     return (

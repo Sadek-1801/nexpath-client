@@ -5,7 +5,6 @@ import AuthHooks from "../hooks/AuthHooks";
 import toast from "react-hot-toast";
 const Navbar = () => {
     const { user, logOut } = AuthHooks()
-    console.log(user)
     const [theme, setTheme] = useState('light')
     const handleTheme = (e) => {
         if (e.target.checked) {
@@ -78,8 +77,10 @@ const Navbar = () => {
                 {user && (
                     <div className="dropdown dropdown-end">
                         <div tabIndex={1} role="button" className="btn btn-circle avatar">
-                            <div title={user?.displayName} className="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component" 
+                            <div title={user?.displayName || "User Name"} className="w-10 rounded-full">
+                                <img 
+                                referrerPolicy="no-referrer" 
+                                alt="Tailwind CSS Navbar component" 
                                 src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} />
                             </div>
                         </div>
