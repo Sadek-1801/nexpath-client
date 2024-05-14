@@ -4,8 +4,9 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import AuthHooks from '../hooks/AuthHooks';
+import axios from 'axios';
 const Register = () => {
-    const { createUser, updateUserProfile, user, setUser } = AuthHooks()
+    const { createUser, updateUserProfile, setUser } = AuthHooks()
     const [showPass, setShowPass] = useState(false)
     const navigate = useNavigate()
     const {
@@ -24,29 +25,37 @@ const Register = () => {
             toast.error('Your password should have at least one upper and one lower case characters.')
             return;
         }
-        // try {
-        //     const result = await createUser(email, password);
+        try {
+            const result = await createUser(email, password);
 
-        //     await updateUserProfile(fullName, photoURL);
+            await updateUserProfile(fullName, photoURL);
 
-        //     setUser({...user, photoURL: photoURL, displayName: fullName})
-        //     toast.success('Successfully registered');
-        //     navigate("/");
-        // }catch(error){
-        //     toast.error(error?.message);
-        // }
-        createUser(email, password)
-            .then(() => {
-                updateUserProfile(fullName, photoURL)
-                    .then(() => {
-                        setUser({ ...user, photoURL: photoURL, displayName: fullName })
-                        toast.success('Successfully registered')
-                        navigate("/");
-                    });
-            })
-            .catch((error) => {
-                toast.error(error?.message)
-            })
+            setUser({...result?.user, photoURL: photoURL, displayName: fullName})
+
+            // jwt 
+            // eslint-disable-next-line no-unused-vars
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_LINK}/jwt`,
+                { email: email },
+                { withCredentials: true })
+
+            toast.success('Successfully registered');
+            navigate("/");
+        }catch(error){
+            toast.error(error?.message);
+        }
+        // createUser(email, password)
+        //     .then(() => {
+        //         updateUserProfile(fullName, photoURL)
+        //             .then(() => {
+        //                 setUser({ ...user, photoURL: photoURL, displayName: fullName })
+        //                 toast.success('Successfully registered')
+        //                 navigate("/");
+        //             });
+        //     })
+        //     .catch((error) => {
+        //         toast.error(error?.message)
+        //     })
     }
     return (
         <div className='w-full max-w-md mx-auto p-4 rounded-md shadow sm:p-8 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100'>

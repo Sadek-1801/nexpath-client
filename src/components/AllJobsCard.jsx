@@ -1,17 +1,14 @@
 import toast from 'react-hot-toast';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthHooks from '../hooks/AuthHooks';
 import PropTypes from "prop-types"
 const AllJobsCard = ({job}) => {
     const { _id, job_title } = job;
-    const location = useLocation()
     const {user} =AuthHooks()
 
     const handleViewDetails = () => {
         if (!user){
-            toast.error("You have to log in first to view details")
-            Navigate ({ state: location?.pathname || '/'})
-            return;
+          return toast.error("You have to log in first to view details");
         }
     }
     return (

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import AuthHooks from "../hooks/AuthHooks";
 import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
+import AuthHooks from "../hooks/AuthHooks";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
-const AddJobs = () => {
+const UpdateJob = () => {
+    const { _id } = useLoaderData()
     const { user } = AuthHooks()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -16,23 +18,21 @@ const AddJobs = () => {
     const [postingDate, setPostingDate] = useState(new Date());
     const [deadline, setDeadLine] = useState(new Date());
     const date = { postingDate, deadline }
-    const onSubmit = async(data) => {
-        const { employerName, employerEmail, jobTitle, picture, job_category, salaryMin, salaryMax} = data;
+    const onSubmit = async (data) => {
+        const { employerName, employerEmail, jobTitle, picture, job_category, salaryMin, salaryMax } = data;
         const upSalaryMin = parseInt(salaryMin)
         const upSalaryMax = parseInt(salaryMax)
 
-        const jobData = { employerName, employerEmail, jobTitle, picture, job_category, upSalaryMin, upSalaryMax, date,
-        applicantsNumber: 0
-        }
+        const jobData = { employerName, employerEmail, jobTitle, picture, job_category, upSalaryMin, upSalaryMax, date }
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_LINK}/job`, jobData)
+            const { data } = await axios.put(`${import.meta.env.VITE_API_LINK}/updateJob/${_id}`, jobData)
             console.log(data)
-            // toast.success("Job Added Successfully")
-        }catch (error){
+            toast.success("Job updated Successfully")
+            navigate('/myJobs')
+        } catch (error) {
             toast.error(error)
         }
     }
-
     return (
         <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
             <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
@@ -105,7 +105,7 @@ const AddJobs = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="deadline" className="text-gray-700 dark:text-gray-200 mr-4">Application Deadline</label> 
+                        <label htmlFor="deadline" className="text-gray-700 dark:text-gray-200 mr-4">Application Deadline</label>
                         <ReactDatePicker
                             id="deadline"
                             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -135,4 +135,4 @@ const AddJobs = () => {
     );
 };
 
-export default AddJobs;
+export default UpdateJob;

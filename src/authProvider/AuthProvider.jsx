@@ -1,13 +1,14 @@
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
-import {  createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import auth from '../firebase/firebase.config';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 export const AuthContext = createContext(null)
 const githubProvider = new GithubAuthProvider();
 const googleProver = new GoogleAuthProvider();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loader, setLoader] = useState(true)
     // create user
@@ -20,7 +21,7 @@ const AuthProvider = ({children}) => {
         return updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: image
-          })  
+        })
     }
 
     // sign In
@@ -29,7 +30,10 @@ const AuthProvider = ({children}) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
     // logout
-    const logOut = () => {
+    const logOut = async() => {
+        const { data } = await axios(`${import.meta.env.VITE_API_LINK}/logout`,
+            { withCredentials: true })
+        console.log(data);
         setUser(null)
         return signOut(auth);
     }
@@ -50,6 +54,7 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoader(false)
+            //to do: try jwt here
         });
         return () => {
             unSubscribe();
@@ -65,13 +70,13 @@ const AuthProvider = ({children}) => {
         updateUserProfile,
         logOut,
         googleLogin,
-        githubLogin, 
+        githubLogin,
         loader
     }
-    
+
     return (
         <AuthContext.Provider value={authInfo}>
-         {children}   
+            {children}
         </AuthContext.Provider>
     );
 };

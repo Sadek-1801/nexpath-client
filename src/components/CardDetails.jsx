@@ -2,13 +2,12 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import AuthHooks from "../hooks/AuthHooks";
 
-// Modal.setAppElement('#CardDetails');
-// 
 
 
 
 const CardDetails = () => {
     const job = useLoaderData();
+    console.log(job)
     const {user} = AuthHooks()
     const [isOpen, setIsOpen] = useState(false);
 

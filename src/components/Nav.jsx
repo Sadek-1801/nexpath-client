@@ -84,7 +84,7 @@ const Navbar = () => {
                                 src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} />
                             </div>
                         </div>
-                        <ul tabIndex={1} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                        <ul tabIndex={1} className="menu dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 mt-4 z-10">
                             <li><Link onClick={handleLogout}>Logout</Link></li>
                             <li><Link to={'/appliedJobs'}>Applied Jobs</Link></li>
                             <li><Link to={'/addJobs'}>Add Jobs</Link></li>
