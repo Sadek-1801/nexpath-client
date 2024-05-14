@@ -3,15 +3,14 @@ import { useLoaderData } from "react-router-dom";
 
 const BlogsCard = () => {
     const post = useLoaderData()
-    const { title, description, date, author, content } = post;
-    console.log(post)
+    const { title, excerpt, date, author, content } = post;
     return (
         <div className="container mx-auto px-4 py-16 md:w-1/2">
         <h1 className="text-3xl font-bold mb-4">{title}</h1>
         <p className="text-gray-600 text-sm mb-8">
           By {author} | Posted on {date}
         </p>
-        <p className="text-lg mb-8">{description}</p>
+        <p className="text-lg mb-8">{excerpt}</p>
   
         {/* Loop through content sections */}
         {content.map((section, index) => (

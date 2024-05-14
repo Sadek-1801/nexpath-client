@@ -12,7 +12,6 @@ const Blogs = () => {
         }
         myBlogsData()
     }, [])
-    console.log(blogs)
     return (
         <div className="bg-gray-100 text-gray-800 flex flex-col gap-8">
             {

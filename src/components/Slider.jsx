@@ -27,13 +27,13 @@ const Slider = () => {
             className="mySwiper"
         >
             <SwiperSlide>
-                <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[38rem]">
+                <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[30rem]">
                     <div
                         className="overflow-hidden bg-white dark:bg-gray-900 lg:flex lg:w-full lg:shadow-md lg:rounded-xl">
-                        <div className="lg:w-1/2">
-                            <div className="h-64 bg-cover lg:h-full rounded-xl"
+                        <div className="lg:w-1/2 py-12 pr-6 pl-12">
+                            <div className="h-30 sm:h-full rounded-xl"
                                 style={{
-                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715676865/rivage-Fa9b57hffnM-unsplash_bxrodn.jpg)`,
+                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715676865/rivage-Fa9b57hffnM-unsplash_bxrodn.jpg)`, backgroundSize: 'cover',
                                 }}></div>
                         </div>
 
@@ -56,14 +56,16 @@ const Slider = () => {
                 </section>
             </SwiperSlide>
             <SwiperSlide>
-            <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[38rem]">
+            <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[30rem]">
                     <div
                         className="overflow-hidden bg-white dark:bg-gray-900 lg:flex  lg:w-full lg:shadow-md lg:rounded-xl">
-                        <div className="lg:w-1/2">
-                            <div className="h-64 bg-cover lg:h-full rounded-xl"
+                        <div className="lg:w-1/2 py-12 pr-6 pl-12">
+                            <div className="h-30 sm:h-full rounded-xl"
                                 style={{
-                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715677054/priscilla-du-preez-XkKCui44iM0-unsplash_zpgxag.jpg)`,
-                                }}></div>
+                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715677054/priscilla-du-preez-XkKCui44iM0-unsplash_zpgxag.jpg)`, backgroundSize: 'cover',
+                                }}>
+
+                                </div>
                         </div>
 
                         <div className="max-w-xl px-6 flex flex-col justify-center py-12 lg:max-w-5xl lg:w-1/2 pr-12">
@@ -85,13 +87,13 @@ const Slider = () => {
                 </section>
             </SwiperSlide>
             <SwiperSlide>
-            <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[38rem]">
+            <section className="bg-gray-100 dark:bg-gray-800 lg:flex lg:justify-between h-[30rem]">
                     <div
                         className="overflow-hidden bg-white dark:bg-gray-900  lg:flex  lg:w-full lg:shadow-md lg:rounded-xl">
-                        <div className="lg:w-1/2">
-                            <div className="h-64 bg-cover lg:h-full rounded-xl"
+                        <div className="lg:w-1/2 py-12 pr-6 pl-12">
+                            <div className="h-30 sm:h-full rounded-xl"
                                 style={{
-                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715680111/andrew-neel-cckf4TsHAuw-unsplash_trbaem.jpg)`,
+                                    backgroundImage: `url(https://res.cloudinary.com/dyssealhz/image/upload/v1715680111/andrew-neel-cckf4TsHAuw-unsplash_trbaem.jpg)`, backgroundSize: 'cover',
                                 }}></div>
                         </div>
 
