@@ -12,6 +12,7 @@ import AddJobs from "../pages/AddJobs";
 import MyJobs from "../pages/MyJobs";
 import CardDetails from "../components/CardDetails";
 import UpdateJob from "../components/UpdateJob";
+import BlogsCard from "../components/BlogsCard";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -55,6 +56,11 @@ export const router = createBrowserRouter([
                 path: "/job/:id",
                 element: <PrivateRouts><CardDetails></CardDetails></PrivateRouts>,
                 loader: ({params}) => fetch(`${import.meta.env.VITE_API_LINK}/job/${params.id}`)
+            },
+            {
+                path: "/blog/:id",
+                element: <BlogsCard></BlogsCard>,
+                loader: ({params}) => fetch(`${import.meta.env.VITE_API_LINK}/blog/${params.id}`)
             },
             {
                 path: "/update/:id",

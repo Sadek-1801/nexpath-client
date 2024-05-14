@@ -13,6 +13,7 @@ const TabCard = () => {
     return (
         <div className="my-6 md:my-12">
             <Tabs defaultIndex={1}>
+                    <h1 className="text-4xl text-second font-bold text-center my-10 lg:my-16">Job Categories</h1>
                 <div className="flex items-center justify-center">
                 <TabList>
                     <Tab>All Jobs</Tab>
@@ -24,14 +25,14 @@ const TabCard = () => {
                 </div>
 
                 <TabPanel>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
                         jobs.map(job => <JobCard key={job._id} job={job}></JobCard>)
                     }
                     </div>
                 </TabPanel>
                 <TabPanel>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
                         jobs
                         .filter(j => j.job_category.toLowerCase() ===  "on-site")
@@ -40,7 +41,7 @@ const TabCard = () => {
                     </div>
                 </TabPanel>
                 <TabPanel>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
                         jobs
                         .filter(j => j.job_category.toLowerCase() ===  "remote")
@@ -49,7 +50,7 @@ const TabCard = () => {
                     </div>
                 </TabPanel>
                 <TabPanel>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
                         jobs
                         .filter(j => j.job_category.toLowerCase() ===  "hybrid")
@@ -58,7 +59,7 @@ const TabCard = () => {
                     </div>
                 </TabPanel>
                 <TabPanel>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {
                         jobs
                         .filter(j => j.job_category.toLowerCase() ===  "part-time")
