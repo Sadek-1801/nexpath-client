@@ -22,12 +22,12 @@ const AddJobs = () => {
         const upSalaryMax = parseInt(salaryMax)
 
         const jobData = { employerName, employerEmail, jobTitle, picture, job_category, upSalaryMin, upSalaryMax, date,
-        applicantsNumber: 0
+        applicantNumber: 0
         }
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_LINK}/job`, jobData)
             console.log(data)
-            // toast.success("Job Added Successfully")
+            toast.success("Job Added Successfully")
         }catch (error){
             toast.error(error)
         }

@@ -3,6 +3,8 @@ import { useState } from "react";
 import AuthHooks from "../hooks/AuthHooks";
 import salary from "../assets/salary.png"
 import applicants from "../assets/applicants.png"
+import toast from "react-hot-toast";
+import axios from "axios";
 
 
 
@@ -15,26 +17,47 @@ const CardDetails = () => {
     const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (user?.email === job?.employerEmail) {
+            return toast.error('You can not apply for this job')
+        }
+        const newDate = new Date().toLocaleDateString()
+        // const deadLine = job?.date?.deadline
+        const deadLine = new Date(job?.date?.deadline).toLocaleDateString()
+
+        if (newDate > deadLine) {
+            return toast.error('Application deadline is over')
+        }
         const name = e.target.name.value;
         const email = e.target.email.value;
         const resumeLink = e.target.resumeLink.value;
         const appliedJob = {
             name: name,
             email: email,
-            resumeLink: resumeLink
+            resumeLink: resumeLink,
+            employerEmail: job.employerEmail,
+            job_category: job.job_category,
+            jobTitle: job.jobTitle,
+            upSalaryMax: job.upSalaryMax,
+            upSalaryMin: job.upSalaryMin, 
+            jobId: job._id
         }
-        console.log(appliedJob, job)
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_LINK}/appliedJob`, appliedJob)
+            console.log(data)
+            toast.success("Applied Successfully")
+        } catch (error) {
+            toast.error(error)
+        }
         handleClose();
     };
-    console.log(job);
-    const { picture, jobTitle, description, upSalaryMin, upSalaryMax } = job;
+    const { picture, jobTitle, description, upSalaryMin, upSalaryMax, applicantNumber } = job;
     return (
         <section className="bg-gray-100 text-gray-800">
             <div className=" container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-12 lg:flex-row lg:justify-between rounded-md">
                 <div style={{ backgroundImage: `url(${picture})`, backgroundSize: 'cover' }} className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 rounded-lg w-full">
-                {/* <img className="rounded-lg object-cover" src={picture} alt="job-banner"/> */}
+                    {/* <img className="rounded-lg object-cover" src={picture} alt="job-banner"/> */}
                 </div>
                 {/* Job Details */}
                 <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
@@ -46,7 +69,7 @@ const CardDetails = () => {
                     </div>
                     <div className="flex items-center mb-4">
                         <span className="h-8 w-8 mr-3"><img src={applicants} alt="" /></span>
-                        <span className="text-gray-700"> Applicants</span>
+                        <span className="text-gray-700"> Applicants: {applicantNumber}</span>
                     </div>
                     <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
                         <button onClick={handleOpen} className="btn w-full bg-first text-white">Apply</button>

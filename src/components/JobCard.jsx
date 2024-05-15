@@ -9,9 +9,8 @@ import applicants from "../assets/applicants.png"
 
 
 const JobCard = ({ job }) => {
-    const { _id, jobTitle, employerName, date, upSalaryMin, upSalaryMax, applicantsNumber } = job;
+    const { _id, jobTitle, employerName, date, upSalaryMin, upSalaryMax, applicantNumber } = job;
     const { user } = AuthHooks()
-
     const handleViewDetails = () => {
         if (!user) {
             return toast.error("You have to log in first to view details")
@@ -32,7 +31,7 @@ const JobCard = ({ job }) => {
                 </div>
                 <div className="flex items-center mb-2">
                     <span className="h-4 w-4 mr-6"><img src={deadline} alt="" /></span>
-                    <span className="text-gray-500 text-sm">Deadline: {new Date(date.deadLine).toLocaleDateString()}</span>
+                    <span className="text-gray-500 text-sm">Deadline: {new Date(date.deadline).toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center mb-2">
                     <span className="h-4 w-4 mr-6"><img src={salary} alt="" /></span>
@@ -40,7 +39,7 @@ const JobCard = ({ job }) => {
                 </div>
                 <div className="flex items-center mb-2">
                     <span className="h-4 w-4 mr-6"><img src={applicants} alt="" /></span>
-                    <span className="text-gray-500 text-sm">Applicants:</span>
+                    <span className="text-gray-500 text-sm">Applicants:{applicantNumber}</span>
                 </div>
             </div>
             <div className="flex items-center justify- px-4 pb-2">

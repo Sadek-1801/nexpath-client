@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const MyJobs = () => {
     const [jobs, setJobs] = useState([]);
     const {user} = AuthHooks()
-    console.log(user)
     useEffect(()=> {
         const myJobsData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_LINK}/myJob/${user?.email}`, {withCredentials: true})

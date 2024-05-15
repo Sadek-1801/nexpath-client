@@ -7,13 +7,13 @@ import toast from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const UpdateJob = () => {
-    const { _id } = useLoaderData()
+    const job = useLoaderData()
+    console.log(job);
     const { user } = AuthHooks()
     const navigate = useNavigate()
     const {
         register,
         handleSubmit,
-        formState: { errors },
     } = useForm();
     const [postingDate, setPostingDate] = useState(new Date());
     const [deadline, setDeadLine] = useState(new Date());
@@ -23,9 +23,11 @@ const UpdateJob = () => {
         const upSalaryMin = parseInt(salaryMin)
         const upSalaryMax = parseInt(salaryMax)
 
-        const jobData = { employerName, employerEmail, jobTitle, picture, job_category, upSalaryMin, upSalaryMax, date }
+        const jobData = { employerName, employerEmail, jobTitle, picture, job_category, upSalaryMin, upSalaryMax, date
+        
+         }
         try {
-            const { data } = await axios.put(`${import.meta.env.VITE_API_LINK}/updateJob/${_id}`, jobData)
+            const { data } = await axios.put(`${import.meta.env.VITE_API_LINK}/updateJob/${job?._id}`, jobData)
             console.log(data)
             toast.success("Job updated Successfully")
             navigate('/myJobs')
@@ -52,13 +54,12 @@ const UpdateJob = () => {
 
                     <div>
                         <label className="text-gray-700 dark:text-gray-200" htmlFor="jobTitle">Job Title</label>
-                        <input id="jobTitle" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("jobTitle", { required: true })} />
-                        {errors.jobTitle && <span className='text-red-600'>This field is required</span>}
+                        <input defaultValue={job?.jobTitle} id="jobTitle" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("jobTitle")} />
+                        
                     </div>
                     <div>
                         <label className="text-gray-700 dark:text-gray-200" htmlFor="picture">Picture URL</label>
-                        <input id="picture" type="url" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("picture", { required: true })} />
-                        {errors.picture && <span className='text-red-600'>This field is required</span>}
+                        <input defaultValue={job?.picture} id="picture" type="url" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("picture")} />
                     </div>
                     <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className='flex flex-col gap-2 '>
@@ -86,8 +87,7 @@ const UpdateJob = () => {
                                     $
                                 </span>
 
-                                <input id="salaryMin" type="number" placeholder="Salary Range: Min" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("salaryMin", { required: true })} />
-                                {errors.salaryMin && <span className='text-red-600'>This field is required</span>}
+                                <input defaultValue={job?.upSalaryMin} id="salaryMin" type="number" placeholder="Salary Range: Min" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("salaryMin")} />
                             </div>
                         </div>
                         <div>
@@ -98,8 +98,7 @@ const UpdateJob = () => {
                                     $
                                 </span>
 
-                                <input id="salaryMax" type="number" placeholder="Salary Range: Max" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("salaryMax", { required: true })} />
-                                {errors.salaryMax && <span className='text-red-600'>This field is required</span>}
+                                <input defaultValue={job?.upSalaryMax} id="salaryMax" type="number" placeholder="Salary Range: Max" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" {...register("salaryMax")} />
                             </div>
                         </div>
                     </div>
@@ -123,12 +122,11 @@ const UpdateJob = () => {
                     <div className="sm:col-span-2">
                         <label htmlFor="Description" className="text-gray-700 dark:text-gray-200">Description</label>
 
-                        <textarea placeholder="lorem..." className="block  mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" {...register("description", { required: true })}></textarea>
+                        <textarea defaultValue={job?.description} placeholder="lorem..." className="block  mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" {...register("description")}></textarea>
                     </div>
                 </div>
-
                 <div className="flex justify-end mt-6">
-                    <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
+                    <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Update</button>
                 </div>
             </form>
         </section>
