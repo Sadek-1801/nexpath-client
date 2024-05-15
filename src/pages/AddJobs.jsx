@@ -5,9 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddJobs = () => {
     const { user } = AuthHooks()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -26,8 +28,8 @@ const AddJobs = () => {
         }
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_LINK}/job`, jobData)
-            console.log(data)
             toast.success("Job Added Successfully")
+            navigate('/allJobs')
         }catch (error){
             toast.error(error)
         }
