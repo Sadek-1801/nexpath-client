@@ -31,6 +31,7 @@ const AllJobs = () => {
             <h2 className="mb-4 text-3xl font-bold leading-tight text-center">Search Your Desired Jobs</h2>
             <fieldset className="w-full sm:w-1/3 space-y-1 text-gray-800 dark:text-gray-100 mx-auto mt-10 mb-16">
                 <label htmlFor="Search" className="hidden">Search</label>
+
                 <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center">
                         <button onClick={handleSearch} type="button" title="search" className="focus:outline-none focus:ring bg-first rounded-l h-full text-white p-4">
@@ -40,7 +41,10 @@ const AllJobs = () => {
                             </svg>
                         </button>
                     </span>
-                    <input value={search} onChange={e => setSearchText(e.target.value)} type="search" name="search" placeholder="Search..." className="w-full py-2 pl-14 pr-4 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-second dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-first" />
+                    <div>
+                        <input value={search} onChange={e => setSearchText(e.target.value)} type="search" name="search" placeholder="Search..." className="w-full py-2 pl-14 pr-4 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-second dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-first" />
+                       
+                    </div>
                 </div>
             </fieldset>
             <div className="overflow-x-auto">
@@ -77,7 +81,7 @@ const AllJobs = () => {
                                     <p>${job?.upSalaryMin}-{job?.upSalaryMax}</p>
                                 </td>
                                 <td className="p-3 text-right">
-                                    <Link onClick={handleViewDetails} to={`/job/${job._id}`} className="btn btn-primary">View Details</Link>
+                                    <Link onClick={handleViewDetails} to={`/job/${job._id}`} className="btn bg-first text-white">View Details</Link>
                                 </td>
                             </tr>)
                         }

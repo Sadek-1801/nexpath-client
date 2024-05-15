@@ -4,22 +4,64 @@ import AuthHooks from "../hooks/AuthHooks";
 import editIcon from "../assets/icons8-edit.gif";
 import deleteIcon from "../assets/icons8-delete.gif";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyJobs = () => {
     const [jobs, setJobs] = useState([]);
     const {user} = AuthHooks()
+    
     useEffect(()=> {
-        const myJobsData = async () => {
-            const { data } = await axios(`${import.meta.env.VITE_API_LINK}/myJob/${user?.email}`, {withCredentials: true})
-            setJobs(data)
-        }
+        const myJobsData = async() => {
+        const { data } = await axios(`${import.meta.env.VITE_API_LINK}/myJob/${user?.email}`, {withCredentials: true})
+        setJobs(data)
+    }
         myJobsData()
     }, [user])
+
+    
     // useEffect(()=> {
     //     fetch(`${import.meta.env.VITE_API_LINK}/myJob/${user?.email}`)
     //     .then(res => res.json())
     //     .then(data => console.log(data))
     // }, [])
+    const handleDelete = async (id) => {
+        console.log(id);
+        try {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+    
+            if (result.isConfirmed) {
+                const response = await axios.delete(`${import.meta.env.VITE_API_LINK}/myJob/${id}`);
+                const data = response.data;
+    
+                if (data.deletedCount > 0) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your Job has been deleted.',
+                        'success'
+                    );
+    
+                    const remaining = jobs.filter(job => job._id !== id);
+                    setJobs(remaining);
+                }
+            }
+        } catch (error) {
+            console.error("There was an error deleting the item:", error);
+            Swal.fire(
+                'Error!',
+                'There was a problem deleting your job.',
+                'error'
+            );
+        }
+    };
+    
     return (
         <div className="container p-2 mx-auto sm:p-4 text-gray-800">
             <h2 className="mb-4 text-2xl font-semibold leading-tight">All Jobs</h2>
@@ -68,7 +110,7 @@ const MyJobs = () => {
                             </td>
                             <td className="p-3 text-right">
                                 <button>
-                                    <Link to={`/delete/${job._id}`}><img className="object-cover" src={deleteIcon} alt="" /></Link>
+                                    <Link onClick={() => handleDelete(job._id)}><img className="object-cover" src={deleteIcon} alt="" /></Link>
                                 </button>
                             </td>
                         </tr>)
