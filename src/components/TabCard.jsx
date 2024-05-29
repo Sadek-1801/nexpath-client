@@ -29,7 +29,7 @@ const TabCard = () => {
     return (
         <div className="my-6 md:my-12">
             <Tabs defaultIndex={1}>
-                <h1 className="text-4xl text-second font-bold text-center my-10 lg:my-16">Job Categories</h1>
+                <h1 className="text-4xl font-bold text-center my-10 lg:my-16">Job Categories</h1>
                 <div className="flex items-center justify-center">
                     <TabList>
                         <Tab>All Jobs</Tab>
